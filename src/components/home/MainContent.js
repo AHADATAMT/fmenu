@@ -6,7 +6,7 @@ import featureIcon03 from './src/images/feature-icon-03.svg'
 import featureIcon04 from './src/images/feature-icon-04.svg'
 import featureIcon05 from './src/images/feature-icon-05.svg'
 import featureIcon06 from './src/images/feature-icon-06.svg'
-
+import ModalExample from '../account/signupModal'
 
 export default class MainContent extends Component {
   render() {
@@ -18,8 +18,9 @@ export default class MainContent extends Component {
 						<div className="hero-copy">
 	                        <h1 className="hero-title mt-0">fMenu</h1>
 	                        <p className="hero-paragraph">The fastest way to process orders and accept payments </p>
-	                        <div className="hero-cta"><a className="button button-primary" href="#">Register now</a><a className="button" href="#">Get in touch</a></div>
-						</div>
+	                        <div className="hero-cta"><ModalExample /><a className="button" href="#">Get in touch</a></div>
+                            
+                        </div>
 						<div className="hero-figure anime-element">
 							<svg className="placeholder" width="528" height="396" viewBox="0 0 528 396">
 								<rect width="528" height="396" style={{"fill": "transparent"}}/>
