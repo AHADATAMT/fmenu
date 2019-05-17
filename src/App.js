@@ -9,6 +9,7 @@ import Restaurant from './components/restaurant/RestaurantPage';
 import RestaurantCreate from './components/restaurant/RestaurantCreatePage';
 import RestaurantEdit from './components/restaurant/RestaurantEditPage';
 import RestaurantDetail from './components/restaurant/RestaurantDetailPage';
+import Test from './scanqr';
 
 class App extends Component {
 
@@ -24,6 +25,7 @@ class App extends Component {
           <Route path="/restaurant/create" component={RestaurantCreate} exact />
           <Route path="/restaurant/:id" component={RestaurantDetail} exact />
           <Route path="/restaurant/:id/edit" component={RestaurantEdit} exact />
+          <Route path="/test" component={Test} exact />
           <Route component={Error} />
         </Switch>
       </BrowserRouter>
