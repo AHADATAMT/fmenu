@@ -56,6 +56,15 @@ export default class LoginPage extends Component {
             }
         }, () => console.log(this.state.form));
     }
+    
+    facebook_login = () => {
+        return fetch('http://localhost:5000/login/facebook')
+            .then((response) => {
+                console.log(response.json());
+                return response.json()
+            })
+            .then((json) => console.log(json))
+    }
 
     render() {
         return (
@@ -67,14 +76,17 @@ export default class LoginPage extends Component {
                             <div className="card card-signin my-5">
                                 <div className="card-body">
                                     <h5 className="card-title text-center">Sign In</h5>
-                                    <Form className="form-signin">
+                                    <Form mehtod="POST" className="form-signin">
+                                        <a className="btn btn-lg btn-facebook btn-block text-uppercase" href="http://localhost:5000/login/facebook"><i className="fab fa-facebook-f mr-2"></i> Sign in with Facebook</a>
+                                        <a className="btn btn-lg btn-google btn-block text-uppercase not-available" onClick={() => { }}><i className="fab fa-google mr-2"></i> Sign in with Google</a>
+                                        <hr className="my-4" />
                                         <div className="form-label-group">
-                                            <input type="email" name="email" id="inputEmail" className="form-control" placeholder="Email address" required autofocus onChange={this.handleChange}/>
+                                            <input type="email" name="email" id="inputEmail" className="form-control" placeholder="Email address" required autofocus onChange={this.handleChange} />
                                             <label for="inputEmail">Email address</label>
                                         </div>
 
                                         <div className="form-label-group">
-                                            <input type="password" name="password" id="inputPassword" className="form-control" placeholder="Password" required onChange={this.handleChange}/>
+                                            <input type="password" name="password" id="inputPassword" className="form-control" placeholder="Password" required onChange={this.handleChange} />
                                             <label for="inputPassword">Password</label>
                                         </div>
 
@@ -83,9 +95,7 @@ export default class LoginPage extends Component {
                                             <label className="custom-control-label" for="customCheck1">Remember password</label>
                                         </div>
                                         <a className="btn btn-lg btn-primary btn-block text-uppercase" onClick={this.submitSignIn}>Sign in</a>
-                                        <hr className="my-4" />
-                                        <button className="btn btn-lg btn-google btn-block text-uppercase" type="submit"><i className="fab fa-google mr-2"></i> Sign in with Google</button>
-                                        <button className="btn btn-lg btn-facebook btn-block text-uppercase" type="submit"><i className="fab fa-facebook-f mr-2"></i> Sign in with Facebook</button>
+
                                     </Form>
                                 </div>
                             </div>

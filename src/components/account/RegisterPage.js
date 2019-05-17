@@ -46,7 +46,6 @@ export default class RegisterPage extends Component {
         }).then(function (response) { return response.json() })
         .then(function (json) {
           console.log(json)
-        
         })
     }
     handleChange = (event) => {
