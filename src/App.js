@@ -26,10 +26,10 @@ class App extends Component {
           <Route path="/register" component={RegisterPage} />
           <Route path="/restaurants" component={Restaurant} exact />
           <Route path="/restaurant/create" component={RestaurantCreate} exact />
+          <Route path="/restaurant/categories" component={Categories} exact />
           <Route path="/restaurant/:id_restaurant" component={RestaurantDetail} exact />
           <Route path="/restaurant/:id_restaurant/edit" component={RestaurantEdit} exact />
           <Route path="/restaurant/:id_restaurant/add_dish" component={DishCreate} exact />
-          <Route path="/restaurant/categories" component={Categories} exact />
           <Route path="/restaurant/category/add" component={CategoryCreate} exact />
           <Route path="/restaurant/category/:id_category" component={RestaurantEdit} exact />
           <Route path="/restaurant/options" component={RestaurantEdit} exact />

@@ -26,8 +26,8 @@ export default class RestaurantDetail extends Component {
       console.log(response)
       response.json().then((body) => {
         this.setState({
-          restaurant: body.restaurant.length > 0 ? body.restaurant[0] : ["Nothing found!"],
-          menu: body.menu.length > 0 ? body.menu : ["Nothing found!"]
+          restaurant: body.restaurant.length > 0 ? body.restaurant[0] : [undefined],
+          menu: body.menu.length > 0 ? body.menu : [undefined]
         }, () => console.log(this.state))
 
       });
