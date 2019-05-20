@@ -4,20 +4,18 @@ import { Form, Card, CardBody, FormGroup, Label, Input, Container, Col, Row, For
 import UploadImg from '../uploadimage/UploadImg'
 import QRCode from 'qrcode.react'
 
-export default class RestaurantCreate extends Component {
+export default class Categories extends Component {
   constructor(props) {
     super(props);
     this.state = {
       form: {
         name: '',
-        hotline: '',
-        address: '',
-        description: '',
-        img_logo_url: ""
+        showname: '',
+        restaurant_id: this.props.match.params.id_restaurant,
       },
-      restaurant_id: ""
     }
   }
+
   handleChange = (event) => {
     let name = event.target.name;
     let value = event.target.value;
@@ -31,15 +29,12 @@ export default class RestaurantCreate extends Component {
 
   handleImageUpload_url = (imgData) => {
     this.setState({
-      form: {
-        ...this.state.form,
-        img_logo_url: imgData
-      }
-    }, () => console.log(this.state.form.img_logo_url));
+      img_logo_url: imgData
+    }, () => console.log(this.state.img_logo_url));
   }
 
   submitForm = () => {
-    if (!this.state.form.img_logo_url)
+    if (!this.state.img_logo_url)
       return false
 
     const data = new FormData();
@@ -64,7 +59,6 @@ export default class RestaurantCreate extends Component {
 
 
   render() {
-    console.log("submitnow: " + this.state.isSubmitNow)
     return (
       <div>
         <Navbar />
@@ -73,34 +67,26 @@ export default class RestaurantCreate extends Component {
             <Col sm="9" md="7" lg="10" className="mx-auto">
               <Card className="card-signin my-5">
                 <CardBody className="card-body">
-                  <h5 className="card-title text-center">New Restaurant</h5>
+                  <h5 className="card-title text-center">Create Dish</h5>
                   <Form mehtod="POST" className="form-signin">
                     <hr className="my-4" />
                     <div className="form-label-group">
-                      <Input type="email" name="name" id="inputName" className="form-control" placeholder="Name" required autofocus onChange={this.handleChange} />
+                      <Input type="text" name="name" id="inputName" className="form-control" placeholder="Name" required autofocus onChange={this.handleChange} />
                       <Label for="inputName">Name</Label>
                     </div>
 
                     <div className="form-label-group">
-                      <Input type="text" name="hotline" id="inputHotline" className="form-control" placeholder="Hotline" required onChange={this.handleChange} />
-                      <Label for="inputHotline">Hotline</Label>
+                      <Input type="text" name="showname" id="inputShowName" className="form-control" placeholder="Show name" required onChange={this.handleChange} />
+                      <Label for="inputShowName">Show name</Label>
                     </div>
 
                     <div className="form-label-group">
-                      <Input type="text" name="address" id="inputAddress" className="form-control" placeholder="Address" required onChange={this.handleChange} />
-                      <Label for="inputAddress">Address</Label>
+                      <Input type="text" name="description" id="inputDescription" className="form-control" placeholder="description" required onChange={this.handleChange} />
+                      <Label for="inputDescription">Price</Label>
                     </div>
-
-                    <div className="form-label-group">
-                      <Input type="textarea" name="description" id="inputDescription" className="form-control" placeholder="description" required onChange={this.handleChange} />
-                      <Label for="inputDescription">Description</Label>
-                    </div>
-
                     <UploadImg handleImageUpload_={this.handleImageUpload_url} />
                     <a className="btn btn-lg btn-primary btn-block text-uppercase" onClick={this.submitForm}>Create</a>
                   </Form>
-                  {this.state.restaurant_id === '' ? null : <QRCode value={"http://localhost:3000/restaurant/"+this.state.restaurant_id} />}
-                  
                 </CardBody>
               </Card>
             </Col>

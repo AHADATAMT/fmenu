@@ -1,5 +1,10 @@
 import React, { Component } from 'react'
 import { Label, Input } from 'reactstrap';
+import Dropzone from 'react-dropzone';
+import request from 'superagent';
+
+const CLOUDINARY_UPLOAD_PRESET = 'fmenu_bmt';
+const CLOUDINARY_UPLOAD_URL = 'https://api.cloudinary.com/v1_1/bmthang94/upload';
 
 
 export default class UploadImg extends Component {
@@ -8,52 +13,72 @@ export default class UploadImg extends Component {
         super(props);
 
         this.state = {
-            imageURL: '',
+            uploadedFileCloudinaryUrl: '',
+            loading: false
         };
     }
+    handleImageUpload(file) {
+        this.setState({ loading: true })
+        let upload = request.post(CLOUDINARY_UPLOAD_URL)
+            .field('upload_preset', CLOUDINARY_UPLOAD_PRESET)
+            .field('file', file);
 
-    // handleUploadImage(ev) {
-    //     ev.preventDefault();
-    //     // handle size file
-    //     const data = new FormData();
-    //     data.append('file', this.uploadInput.files[0]);
-    //     data.append('filename', this.fileName.value);
+        upload.end((err, response) => {
+            this.setState({ loading: false })
+            if (err) {
+                console.error(err);
+            }
 
-    //     fetch('http://localhost:5000/upload', {
-    //         method: 'POST',
-    //         body: data,
-    //     }).then((response) => {
-    //         response.json().then((body) => {
-    //             this.setState({ imageURL: `http://localhost:8000/${body.file}` });
-    //         });
-    //     });
-    // }
-
-    handleImageChange = (event) => {
-        let file = "";
-        console.log(event.target.files[0])
-        if (event.target.files[0] !== undefined) {
-            file = event.target.files[0]
-        } else
-            return
-
-        this.setState({
-            imageObject: URL.createObjectURL(file)
-        })
-        
-        this.props.handleImageUpload(file)
+            if (response.body.secure_url !== '') {
+                this.setState({
+                    uploadedFileCloudinaryUrl: response.body.secure_url
+                });
+                this.props.handleImageUpload_(response.body.secure_url)
+            }
+        });
     }
-    // return image data to form
+    onImageDrop(files) {
+        this.setState({
+            uploadedFile: files[0]
+        });
+
+        this.handleImageUpload(files[0]);
+    }
+
     render() {
         return (
             <div>
-                <div className="form-label-group">
-                    <Input type="file" name="imglogo" id="logo" required className="form-control" onChange={this.handleImageChange} />
-                    <Label for="logo">Logo</Label>
+                <div className="FileUpload">
+                    <Dropzone
+                        onDrop={this.onImageDrop.bind(this)}
+                        accept="image/png, image/jpeg"
+                        multiple={false}>
+                        {({ getRootProps, getInputProps }) => {
+                            return (
+                                <div
+                                    {...getRootProps()}
+                                >
+                                    <input {...getInputProps()} />
+                                    {
+                                        <p>Try dropping some files here, or click to select files to upload.</p>
+                                    }
+                                </div>
+                            )
+                        }}
+                    </Dropzone>
+                    <div>
+                        <p>Preview Image here:</p>
+                        {!this.state.loading ? null : <p>Loading...</p>}
+
+                        {this.state.uploadedFileCloudinaryUrl === '' ? null :
+                            <div>
+                                <p>{this.state.uploadedFile.name}</p>
+                                <img src={this.state.uploadedFileCloudinaryUrl} />
+                            </div>
+                        }
+                    </div>
                 </div>
-                <p>Preview image</p>
-                <img src={this.state.imageObject} alt="img" width={150} height={150} />
             </div>
-        );
+        )
     }
 }
