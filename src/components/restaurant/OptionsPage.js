@@ -2,18 +2,18 @@ import React, { Component } from 'react'
 import Navbar from '../layout/Navbar'
 import { Card, CardBody, Container, Col, Row } from 'reactstrap';
 
-export default class Categories extends Component {
+export default class Options extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      categories: []
+      options: []
     }
-    this.get_categories()
+    this.get_options()
   }
-  get_categories = () => {
+  get_options = () => {
     let token = sessionStorage.getItem('token');
     console.log(token)
-    return fetch('http://localhost:5000/restaurant/categories', {
+    return fetch('http://localhost:5000/restaurant/options', {
       method: 'GET',
       headers: {
         'Authorization': `Token ${token}`
@@ -23,15 +23,15 @@ export default class Categories extends Component {
       response.json().then((body) => {
         console.log(body)
         this.setState({
-          categories: body.categories.length > 0 ? body.categories : ["Nothing found!"]
+          options: body.options.length > 0 ? body.options : ["Nothing found!"]
         })
       });
     });
   }
 
-  remove_category = (category) => {
+  remove_options = (options) => {
     let token = sessionStorage.getItem('token');
-    return fetch('http://localhost:5000/restaurant/delete/category/' + category.id, {
+    return fetch('http://localhost:5000/restaurant/delete/option/' + options.id, {
       method: 'POST',
       headers: {
         'Authorization': `Token ${token}`
@@ -41,11 +41,11 @@ export default class Categories extends Component {
       response.json().then((body) => {
         console.log(body)
         if (body.success) {
-          let current_categories = [...this.state.categories];
-          let index = current_categories.indexOf(category)
-          delete current_categories[index];
+          let current_options = [...this.state.options];
+          let index = current_options.indexOf(options)
+          delete current_options[index];
           this.setState({
-            categories: [...current_categories]
+            options: [...current_options]
           })
         }
       });
@@ -60,12 +60,12 @@ export default class Categories extends Component {
             <Col sm="9" md="7" lg="10" className="mx-auto">
               <Card className="card-signin my-5">
                 <CardBody className="card-body">
-                  <h5 className="card-title text-center">Categories</h5>
-                  {this.state.categories.map((category) => {
-                    if (category !== undefined)
+                  <h5 className="card-title text-center">options</h5>
+                  {this.state.options.map((options) => {
+                    if (options !== undefined)
                       return (<p>
-                        <a href={'category/' + category.id}>{category.name} </a>|
-                        <a href="#" onClick={() => this.remove_category(category)}>remove</a>
+                        <a href={'options/' + options.id}>{options.name} </a>|
+                        <a href="#" onClick={() => this.remove_options(options)}>remove</a>
                       </p>)
                   }
                   )}

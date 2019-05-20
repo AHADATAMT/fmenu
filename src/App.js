@@ -13,6 +13,7 @@ import DishCreate from './components/restaurant/DishCreatePage';
 import CategoryCreate from './components/restaurant/CategoryCreatePage';
 import OptionCreate from './components/restaurant/OptionCreatePage';
 import Categories from './components/restaurant/CategoriesPage';
+import Options from './components/restaurant/OptionsPage';
 
 class App extends Component {
 
@@ -27,12 +28,12 @@ class App extends Component {
           <Route path="/restaurants" component={Restaurant} exact />
           <Route path="/restaurant/create" component={RestaurantCreate} exact />
           <Route path="/restaurant/categories" component={Categories} exact />
+          <Route path="/restaurant/options" component={Options} exact />
           <Route path="/restaurant/:id_restaurant" component={RestaurantDetail} exact />
           <Route path="/restaurant/:id_restaurant/edit" component={RestaurantEdit} exact />
           <Route path="/restaurant/:id_restaurant/add_dish" component={DishCreate} exact />
           <Route path="/restaurant/category/add" component={CategoryCreate} exact />
           <Route path="/restaurant/category/:id_category" component={RestaurantEdit} exact />
-          <Route path="/restaurant/options" component={RestaurantEdit} exact />
           <Route path="/restaurant/option/add" component={OptionCreate} exact />
           <Route path="/restaurant/option/:id_option" component={RestaurantEdit} exact />
           <Route path="/scan_menu" component={RestaurantEdit} exact />
